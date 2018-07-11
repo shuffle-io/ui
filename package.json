@@ -4,8 +4,10 @@
     "license": "UNLICENSE",
     "private": false,
     "dependencies": {
+        "@types/lodash": "^4.14.111",
         "@types/react-redux": "^6.0.3",
         "@types/react-router-dom": "^4.2.7",
+        "@types/redux-logger": "^3.0.6",
         "history": "^4.7.2",
         "lodash": "^4.17.10",
         "query-string": "^6.1.0",
@@ -15,7 +17,9 @@
         "react-router": "^4.3.1",
         "react-router-dom": "^4.3.1",
         "react-scripts-ts": "2.16.0",
-        "redux": "^4.0.0"
+        "redux": "^4.0.0",
+        "redux-logger": "^3.0.6",
+        "redux-thunk": "^2.3.0"
     },
     "scripts": {
         "start": "react-scripts-ts start",

@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { Link, Route, Router } from "react-router-dom";
+import { /*Link,*/ Route, Router } from "react-router-dom";
 
 import Callback from "components/Callback";
-import Navbar from "components/Navbar";
+// import Navbar from "components/Navbar";
 import Home from "pages/Home";
 import { AuthService } from "services";
 import { history } from "store";
@@ -28,7 +28,7 @@ const renderCallback = (props: any) => {
 const Routes = () => (
     <Router history={history}>
         <div>
-            <Navbar>
+            {/* <Navbar>
                 <ul>
                     <li>
                         <Link to="/">Home</Link>
@@ -40,9 +40,7 @@ const Routes = () => (
                         <Link to="/topics">Topics</Link>
                     </li>
                 </ul>
-            </Navbar>
-
-            <hr />
+            </Navbar> */}
 
             <Route exact path="/" component={Home} />
 
