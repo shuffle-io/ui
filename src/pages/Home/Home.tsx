@@ -7,7 +7,6 @@ import AlbumCard from "components/Album";
 import * as actions from "store/actions/imgur";
 import { IAlbum, IStore, IUser } from "types";
 
-const API_ROOT: string = process.env.REACT_APP_API_ROOT || "http://shuffle.io";
 const DEBOUNCE_TIME: number = 200;
 interface IProps {
     albums: IAlbum[];
@@ -15,6 +14,14 @@ interface IProps {
     getAlbums(username: string): any;
     getAlbumImages(hash: string): any;
 }
+
+const styles: any = {
+    header: {
+        fontFamily: "Segoe UI",
+        fontWeight: "800",
+        textTransform: "uppercase"
+    }
+};
 
 class Home extends React.Component<IProps> {
     private inputRef: React.RefObject<any> = React.createRef();
@@ -42,27 +49,64 @@ class Home extends React.Component<IProps> {
 
         return (
             <div>
-                <p>
-                    ShuffleIO works by choosing a random image from a public
-                    Imgur album. Any public album may be used by plugging the
-                    album's ID into the shuffle endpoint:&nbsp;
-                    {`${API_ROOT}/api/shuffle/<ALBUM_ID>`}.
-                </p>
+                <section className="hero is-primary is-bold is-medium has-text-centered">
+                    <div className="hero-body">
+                        <div className="container">
+                            <h1 className="title" style={styles.header}>
+                                An image{" "}
+                                <span className="has-text-dark">
+                                    randomizer
+                                </span>{" "}
+                                for <span className="has-text-dark">Imgur</span>{" "}
+                                albums
+                            </h1>
 
-                <form>
-                    View your public albums:
-                    <input
-                        type="text"
-                        defaultValue="shinkaaa"
-                        aria-label="Imgur Username"
-                        onChange={this.inputHandler}
-                        ref={this.inputRef}
-                    />
-                </form>
+                            <h2 className="subtitle" />
+                        </div>
+                    </div>
+                </section>
 
-                {albums.map((album: IAlbum) => (
-                    <AlbumCard key={`album-${album.id}`} {...{ album }} />
-                ))}
+                <div className="section has-text-centered">
+                    <div className="container">
+                        <form>
+                            <label className="label" htmlFor="username">
+                                What's your Imgur username?
+                            </label>
+
+                            <div className="columns is-centered">
+                                <div className="column is-one-fourth is-narrow">
+                                    <input
+                                        type="text"
+                                        defaultValue="shinkaaa"
+                                        aria-label="Imgur Username"
+                                        onChange={this.inputHandler}
+                                        ref={this.inputRef}
+                                        id="username"
+                                        className="input has-text-centered is-radiusless"
+                                    />
+
+                                    <p className="help">
+                                        ShuffleIO works by choosing a random
+                                        image from a public Imgur album.
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <hr />
+
+                    <div className="columns is-centered">
+                        {albums.map((album: IAlbum) => (
+                            <div
+                                className="column is-one-fourth is-narrow"
+                                key={`album-${album.id}`}
+                            >
+                                <AlbumCard {...{ album }} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -73,13 +117,10 @@ class Home extends React.Component<IProps> {
     };
 
     private getImages = (username: string) => {
-        const { getAlbums } = this.props;
-        getAlbums(username).then((response: any) => {
-            // console.log(response);
-        });
-        // .then((response: any) => {
-        //     getAlbumImages(response.data.id);
-        // });
+        if (username) {
+            const { getAlbums } = this.props;
+            getAlbums(username);
+        }
     };
 }
 

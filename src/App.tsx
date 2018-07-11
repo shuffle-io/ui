@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Provider } from "react-redux";
 
-import Routes from "pages/Routes";
+import Home from "pages/Home";
 
 const App = ({ store }: any) => (
     <Provider store={store}>
-        <Routes />
+        <Home />
     </Provider>
 );
 
