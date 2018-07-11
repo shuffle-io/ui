@@ -1,14 +1,10 @@
-export const API_ROOT: string = "";
-
-const callApi = (
-    endpoint: string,
-    options: RequestInit = {},
-    useRoot: boolean = true
-) => {
-    const root: string = useRoot ? API_ROOT : "";
-    return fetch(root + endpoint, options)
+const callApi = (endpoint: string, options: RequestInit = {}) => {
+    return fetch(endpoint, options)
         .then((response: Response) => {
-            return response.json();
+            console.log("RESPONSE", response);
+            return response.json().then((json: any) => {
+                return response.ok ? json : Promise.reject(json);
+            });
         })
         .catch((error: Response) => {
             return error.status

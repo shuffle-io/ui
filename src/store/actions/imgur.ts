@@ -1,20 +1,49 @@
 import { CALL_API } from "middleware/api";
 
-export const AUTH_REQUEST: string = "AUTH_REQUEST";
-export const AUTH_SUCCESS: string = "AUTH_SUCCESS";
-export const AUTH_FAILURE: string = "AUTH_FAILURE";
-
 const CLIENT_ID: string = process.env.REACT_APP_IMGUR_CLIENT_ID || "";
-const CLIENT_SECRET: string = process.env.REACT_APP_IMGUR_CLIENT_ID || "";
+// const CLIENT_SECRET: string = process.env.REACT_APP_IMGUR_CLIENT_ID || "";
 const BASE_URL: string = "https://api.imgur.com";
 
-export const requestLogin = (credentials: object) => (dispatch: any) =>
+const AUTH: object = {
+    Authorization: `Client-ID ${CLIENT_ID}`
+};
+
+export const GET_ALBUMS_REQUEST: string = "GET_ALBUMS_REQUEST";
+export const GET_ALBUMS_SUCCESS: string = "GET_ALBUMS_SUCCESS";
+export const GET_ALBUMS_FAILURE: string = "GET_ALBUMS_FAILURE";
+
+export const getAlbums = (username: string) => (dispatch: any) =>
     dispatch({
         [CALL_API]: {
-            endpoint: `${BASE_URL}/oauth2/authorize?CLIENT_ID=${CLIENT_ID}&response_type=token&state=${CLIENT_SECRET}`,
+            endpoint: `${BASE_URL}/3/account/${username}/albums`,
             options: {
-                method: "POST"
+                headers: {
+                    ...AUTH
+                },
+                method: "GET"
             },
-            types: [AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE]
+            types: [GET_ALBUMS_REQUEST, GET_ALBUMS_SUCCESS, GET_ALBUMS_FAILURE]
+        }
+    });
+
+export const GET_ALBUM_IMAGES_REQUEST: string = "GET_ALBUM_IMAGES_REQUEST";
+export const GET_ALBUM_IMAGES_SUCCESS: string = "GET_ALBUM_IMAGES_SUCCESS";
+export const GET_ALBUM_IMAGES_FAILURE: string = "GET_ALBUM_IMAGES_FAILURE";
+
+export const getAlbumImages = (hash: string) => (dispatch: any) =>
+    dispatch({
+        [CALL_API]: {
+            endpoint: `${BASE_URL}/3/album/${hash}/images`,
+            options: {
+                headers: {
+                    ...AUTH
+                },
+                method: "GET"
+            },
+            types: [
+                GET_ALBUM_IMAGES_REQUEST,
+                GET_ALBUM_IMAGES_SUCCESS,
+                GET_ALBUM_IMAGES_FAILURE
+            ]
         }
     });
