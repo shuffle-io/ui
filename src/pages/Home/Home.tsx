@@ -96,7 +96,7 @@ class Home extends React.Component<IProps> {
 
                     <hr />
 
-                    <div className="columns is-centered">
+                    <div className="columns is-centered" style={{ flexWrap: "wrap" }}>
                         {albums.map((album: IAlbum) => (
                             <div
                                 className="column is-one-fourth is-narrow"
